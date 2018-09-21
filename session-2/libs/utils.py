@@ -131,6 +131,8 @@ def get_celeb_files():
     # Create a directory
     if not os.path.exists('img_align_celeba'):
         os.mkdir('img_align_celeba')
+    
+    files = [file_i for file_i in os.listdir('img_align_celeba') if '.jpg' in file_i]
 
     # Now perform the following 100 times:
     for img_i in range(1, 101):
@@ -145,7 +147,9 @@ def get_celeb_files():
         print(url, end='\r')
 
         # And now download the url to a location inside our new directory
-        urllib.request.urlretrieve(url, os.path.join('img_align_celeba', f))
+        p = os.path.join('img_align_celeba', f)
+        if f not in files:
+            urllib.request.urlretrieve(url, p)
 
     files = [os.path.join('img_align_celeba', file_i)
              for file_i in os.listdir('img_align_celeba')
